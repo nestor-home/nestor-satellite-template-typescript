@@ -1,8 +1,8 @@
 /**
  * `my-satellite run`: this device as a satellite of a Nestor server.
  *
- *     my-satellite run --room salon --pairing-uri "nestor+http://nestor.local:7860/?code=K7QF2M9X"
- *     my-satellite run --core http://nestor.local:7860 --room salon
+ *     my-satellite run --room salon --pairing-uri "nestor+http://nestor.local:8471/?code=K7QF2M9X"
+ *     my-satellite run --core http://nestor.local:8471 --room salon
  *
  * The first run pairs: with the pairing URI or enrollment code it is given (flags, or
  * `NESTOR_PAIRING_URI` / `NESTOR_PAIRING_CODE`), else it says a device code on its speaker and logs
@@ -56,7 +56,7 @@ const USAGE = `Usage: ${NAME} run --room <room> [options]
 Pair this device with a Nestor server if needed, then stay connected.
 
 Options:
-  --core <url>          the server's voice address, e.g. http://nestor.local:7860
+  --core <url>          the server's voice address, e.g. http://nestor.local:8471
                         (required unless a pairing URI gives it)
   --room <slug>         the room the device is in: salon, cuisine… (required)
   --pairing-uri <uri>   pair with this pairing URI (default: $${PAIRING_URI_ENV})

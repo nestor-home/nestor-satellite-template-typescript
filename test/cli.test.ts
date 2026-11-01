@@ -3,19 +3,19 @@ import { describe, expect, it } from "vitest";
 import { build, defaultId, MODEL, NAME, parse, UsageError } from "../src/cli.js";
 
 const NO_ENV = {};
-const URI = "nestor+http://nestor.local:7860/?code=K7QF2M9X";
+const URI = "nestor+http://nestor.local:8471/?code=K7QF2M9X";
 const quiet = { debug() {}, info() {}, warn() {} };
 
 describe("my-satellite run", () => {
   it("takes the server's address and the enrollment code from a pairing URI", () => {
     const args = parse(["run", "--room", "salon", "--pairing-uri", URI], NO_ENV);
-    expect(args).toMatchObject({ core: "http://nestor.local:7860", enrollment: "K7QF2M9X", id: defaultId() });
+    expect(args).toMatchObject({ core: "http://nestor.local:8471", enrollment: "K7QF2M9X", id: defaultId() });
     expect(args).toHaveProperty("tokenFile", `~/.config/${NAME}/${defaultId()}.json`);
   });
 
   it("reads the pairing URI from the environment, the way a person configures a headless device", () => {
     const args = parse(["run", "--room", "salon"], { NESTOR_PAIRING_URI: URI });
-    expect(args).toMatchObject({ core: "http://nestor.local:7860", enrollment: "K7QF2M9X" });
+    expect(args).toMatchObject({ core: "http://nestor.local:8471", enrollment: "K7QF2M9X" });
   });
 
   it("needs the server's address when no pairing URI gives it", () => {
@@ -30,7 +30,7 @@ describe("my-satellite run", () => {
   });
 
   it("declares the light, and says its device code on the speaker to pair", () => {
-    const args = parse(["run", "--core", "http://nestor.local:7860", "--room", "salon", "--id", "enceinte"], NO_ENV);
+    const args = parse(["run", "--core", "http://nestor.local:8471", "--room", "salon", "--id", "enceinte"], NO_ENV);
     if (args === "help") throw new Error("expected arguments");
     const satellite = build(args, quiet);
     expect(satellite.manifest.device.id).toBe("enceinte");
