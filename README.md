@@ -128,7 +128,7 @@ nestor-home. In your repository:
 ## Documentation
 
 - [Satellites](https://nestorhome.dev/docs/satellites/): capabilities and pairing.
-- [Protocol](https://nestorhome.dev/docs/satellites/protocol/): `nestor.satellite/2`, the standard.
+- [Protocol](https://nestorhome.dev/docs/satellites/protocol/): the standard satellites follow.
 - [TypeScript SDK](https://nestorhome.dev/docs/sdks/typescript/): every option of `Satellite`.
 - [Conformance](https://nestorhome.dev/docs/satellites/conformance/).
 
