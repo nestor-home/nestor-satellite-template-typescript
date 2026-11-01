@@ -1,0 +1,3 @@
+# Nestor's packages are used as soon as they are released.
+minimumReleaseAgeExclude:
+  - "@nestor-home/*"
