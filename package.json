@@ -26,7 +26,7 @@
     "conformance": "pnpm build && vitest run --config vitest.conformance.config.ts"
   },
   "dependencies": {
-    "@nestor-home/satellite": "0.2.0",
+    "@nestor-home/satellite": "0.3.0",
     "@roamhq/wrtc": "0.10.0"
   },
   "devDependencies": {
