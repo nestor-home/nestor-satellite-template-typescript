@@ -1,4 +1,4 @@
-import { IDENTIFY } from "@nestor-home/satellite";
+import { AUDIO_CAPTURE, AUDIO_PLAYBACK, IDENTIFY, TEXT_DISPLAY } from "@nestor-home/satellite";
 import { describe, expect, it } from "vitest";
 import { build, defaultId, MODEL, NAME, parse, UsageError } from "../src/cli.js";
 
@@ -35,7 +35,9 @@ describe("my-satellite run", () => {
     const satellite = build(args, quiet);
     expect(satellite.manifest.device.id).toBe("enceinte");
     expect(satellite.manifest.device.model).toBe(MODEL);
-    expect(satellite.manifest.has(IDENTIFY)).toBe(true);
+    for (const capability of [IDENTIFY, AUDIO_CAPTURE, AUDIO_PLAYBACK, TEXT_DISPLAY]) {
+      expect(satellite.manifest.has(capability), capability).toBe(true);
+    }
     expect(satellite.manifest.pairingMethods).toContain("device_code.speech");
   });
 });

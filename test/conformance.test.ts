@@ -4,7 +4,7 @@
  * The published server's `nestor satellites conformance`, run through uvx at the version in
  * `.nestor-version`, launches the built `my-satellite run` once per scenario, without a sound card:
  * pairing with a device code and an enrollment code, refused codes, rate limits, identify, acks,
- * audio both ways and reconnection. Run with `pnpm conformance`; raise `.nestor-version` to check
+ * text, audio both ways and reconnection. Run with `pnpm conformance`; raise `.nestor-version` to check
  * against a newer server.
  */
 
@@ -49,9 +49,10 @@ it("passes the server's conformance suite", async () => {
   ]);
   expect(output).not.toMatch(/^FAIL/m);
   for (const check of [
-    "PASS  receives the core's audio (W3)",
-    "PASS  sends its microphone audio (W3)",
-    "PASS  reconnects with the same token after a hang-up (W4)",
+    "PASS  receives the core's audio (A1, A2)",
+    "PASS  sends its microphone audio (A1, A2)",
+    "PASS  acknowledges intent.text within 1 s",
+    "PASS  reconnects with the same token after the core closes its link (L5)",
     "PASS  pairs with the enrollment code of NESTOR_PAIRING_URI, no code typed (P3, P4)",
     "PASS  presents a refused enrollment code (used) only once (P5)",
     "PASS  keeps polling after a pending identify (I1)",
