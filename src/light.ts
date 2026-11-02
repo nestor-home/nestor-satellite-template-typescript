@@ -23,6 +23,11 @@ export class Light implements Body {
     console.log("light: blink");
   }
 
+  show(text: string, _final: boolean): void {
+    // TODO(hardware): the assistant's words, one message each (`final` on the last of a turn).
+    console.log(`nestor: ${text}`);
+  }
+
   connected(up: boolean): void {
     // TODO(hardware): a dim light when the link to the core is down, for instance.
     console.log(`light: ${up ? "connected" : "disconnected"}`);

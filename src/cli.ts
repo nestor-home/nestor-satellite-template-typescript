@@ -12,15 +12,7 @@
 
 import { hostname } from "node:os";
 import { parseArgs } from "node:util";
-import {
-  AUDIO_CAPTURE,
-  AUDIO_PLAYBACK,
-  IDENTIFY,
-  type Logger,
-  Manifest,
-  ProtocolError,
-  Satellite,
-} from "@nestor-home/satellite";
+import { IDENTIFY, type Logger, Manifest, ProtocolError, Satellite } from "@nestor-home/satellite";
 import {
   type AudioSink,
   type AudioSource,
@@ -30,7 +22,7 @@ import {
   type Environment,
   FileTokenStore,
   languagesFromEnv,
-  nodeWebRtc,
+  nodeVoice,
   PAIRING_CODE_ENV,
   PAIRING_URI_ENV,
   readProvisioning,
@@ -140,18 +132,23 @@ export function parse(argv: readonly string[], env: Environment = process.env): 
 
 export function build(args: Arguments, logger: Logger): Satellite {
   // IDENTIFY is the optional capability this example shows (Light.identify): declare only what the
-  // device really has. A microphone and a speaker are the minimum.
-  const manifest = Manifest.of({ id: args.id, model: MODEL, room: args.room }, AUDIO_CAPTURE, AUDIO_PLAYBACK, IDENTIFY);
+  // device really has. Audio and text follow from what the satellite is given: `voice` declares the
+  // microphone and the speaker, `text.display` the assistant's words.
+  const manifest = Manifest.of({ id: args.id, model: MODEL, room: args.room }, IDENTIFY);
   const source: AudioSource = args.input === "none" ? new SilenceSource(RATE) : new CommandSource(args.input);
   const sink: AudioSink = args.output === "none" ? new DiscardSink(RATE) : new CommandSink(args.output);
+  const light = new Light();
   return new Satellite({
     core: args.core,
     manifest,
     tokens: new FileTokenStore(args.tokenFile),
-    webrtc: nodeWebRtc({ source, sink, logger }),
-    // No screen: the device code is said on the speaker (unless --output none) and logged.
+    voice: nodeVoice({ source, sink, logger }),
+    // Without a screen, drop `text`: the device then only speaks.
+    text: { display: (text, final) => light.show(text, final) },
+    // No screen to look at while pairing: the device code is said on the speaker (unless --output
+    // none) and logged.
     pairing: { enrollment: args.enrollment },
-    body: new Light(),
+    body: light,
     locale: args.locale,
     logger,
   });

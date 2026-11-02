@@ -3,8 +3,8 @@
 A working [Nestor](https://nestorhome.dev) satellite to start your own device from: a microphone,
 a speaker and a status light, in Node, on the
 [`@nestor-home/satellite`](https://www.npmjs.com/package/@nestor-home/satellite) SDK. It pairs with
-a Nestor server, streams audio both ways, shows the assistant's attitude and blinks when a person
-looks for it. Its CI runs the server's conformance suite on every change.
+a Nestor server, holds one WebSocket link to it, streams audio both ways over WebRTC, prints the
+assistant's words, shows its attitude and blinks when a person looks for it. Its CI runs the server's conformance suite on every change.
 
 The light is printed: replace it with your hardware, and keep the rest.
 
@@ -72,12 +72,16 @@ sound card; `pnpm start run --help` lists the rest. After a change, `pnpm build`
 
 Look for `TODO(hardware)`:
 
-- `src/light.ts`: the body. `behavior` (idle, listening, thinking, speaking) and `identify` print;
-  drive your LEDs, screen or motors there. Calls must return at once: keep the state and animate
-  from a timer of your own.
+- `src/light.ts`: the body. `behavior` (idle, listening, thinking, speaking), `identify` and `show`
+  (the assistant's words) print; drive your LEDs, screen or motors there. Calls must return at
+  once: keep the state and animate from a timer of your own.
 - `src/cli.ts`, `DEFAULT_INPUT` and `DEFAULT_OUTPUT`: the commands that record and play raw 48 kHz
   16-bit mono PCM (`--input`, `--output` override them). Or write an `AudioSource` / `AudioSink`.
-- `src/cli.ts`, `build()`: the manifest. Declare only what the device has.
+- `src/cli.ts`, `build()`: the manifest and the satellite. Declare only what the body and sensors
+  have; audio and text follow from what the satellite is given: `voice` (`nodeVoice` from
+  `@nestor-home/satellite/node`: `audio.capture`, `audio.playback`), `text.display`
+  (`text.display`) and `text.input` (`text.input`, then `satellite.sendText(…)`). Without a screen,
+  drop `text`.
 
 | Capability                                     | Body method or SDK call                       |
 | ---------------------------------------------- | --------------------------------------------- |
@@ -102,7 +106,7 @@ pnpm conformance
 [conformance suite](https://nestorhome.dev/docs/satellites/conformance/) against it, through uvx
 ([uv](https://docs.astral.sh/uv/) must be installed) at the version in `.nestor-version`: it
 launches `my-satellite run --input none --output none` once per scenario and checks pairing,
-refused codes, identify, acks, audio and reconnection. CI runs both on every pull request.
+refused codes, identify, acks, text, audio and reconnection. CI runs both on every pull request.
 `pnpm format` fixes the formatting.
 
 ## Release
