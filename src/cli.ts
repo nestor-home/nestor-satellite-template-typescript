@@ -29,6 +29,7 @@ import {
   SilenceSource,
 } from "@nestor-home/satellite/node";
 import { Light } from "./light.js";
+import { SOFTWARE } from "./version.js";
 
 export const NAME = "my-satellite";
 // TODO(rename): what your device is, declared to Nestor (a slug).
@@ -133,8 +134,9 @@ export function parse(argv: readonly string[], env: Environment = process.env): 
 export function build(args: Arguments, logger: Logger): Satellite {
   // IDENTIFY is the optional capability this example shows (Light.identify): declare only what the
   // device really has. Audio and text follow from what the satellite is given: `voice` declares the
-  // microphone and the speaker, `text.display` the assistant's words.
-  const manifest = Manifest.of({ id: args.id, model: MODEL, room: args.room }, IDENTIFY);
+  // microphone and the speaker, `text.display` the assistant's words. `software` names this package,
+  // the one an update would install.
+  const manifest = new Manifest({ id: args.id, model: MODEL, room: args.room }, [IDENTIFY], { software: SOFTWARE });
   const source: AudioSource = args.input === "none" ? new SilenceSource(RATE) : new CommandSource(args.input);
   const sink: AudioSink = args.output === "none" ? new DiscardSink(RATE) : new CommandSink(args.output);
   const light = new Light();
