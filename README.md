@@ -35,6 +35,7 @@ grep -rn --exclude-dir=node_modules --exclude-dir=dist my-satellite .
 | What                  | Where                                                   |
 | --------------------- | ------------------------------------------------------- |
 | Package name, author  | `package.json` (`name`, `author`, `description`)        |
+| Software              | `NAME` in `src/version.ts`: the package name            |
 | Command               | `package.json`, `bin`                                   |
 | Model id              | `MODEL` in `src/cli.ts`: what your device is, as a slug |
 | Token folder, command | `NAME` in `src/cli.ts`                                  |
@@ -82,6 +83,11 @@ Look for `TODO(hardware)`:
   `@nestor-home/satellite/node`: `audio.capture`, `audio.playback`), `text.display`
   (`text.display`) and `text.input` (`text.input`, then `satellite.sendText(…)`). Without a screen,
   drop `text`.
+
+The manifest names the software the device runs (`src/version.ts`): your package and its version,
+kept equal to `package.json` by release-please. To let a person update the device from the admin,
+give the satellite an `updater` (the SDK's `Updater` interface: find and install a newer version
+of that package).
 
 | Capability                                     | Body method or SDK call                       |
 | ---------------------------------------------- | --------------------------------------------- |

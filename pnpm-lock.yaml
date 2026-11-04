@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       '@nestor-home/satellite':
-        specifier: 0.5.0
-        version: 0.5.0(@roamhq/wrtc@0.10.0)
+        specifier: 0.6.0
+        version: 0.6.0(@roamhq/wrtc@0.10.0)
       '@roamhq/wrtc':
         specifier: 0.10.0
         version: 0.10.0
@@ -271,8 +271,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@nestor-home/satellite@0.5.0':
-    resolution: {integrity: sha512-CLCD2uscsW2ftjy9RlXNqWoxdwfPceg3bBjwhz3YIfZ62NxCyprukRhmwLG5ymmAaBtzyhXCrGRSVZDXS28v/A==}
+  '@nestor-home/satellite@0.6.0':
+    resolution: {integrity: sha512-bXydh9cj6TXiBHOF9wE9eUj8gBf2qDFa6M4sdlVH+ECPh53yHwCSYGuU02erwYY9oluFhLE53aRA+QQ4tdjmqA==}
     engines: {node: '>=22.12'}
     hasBin: true
     peerDependencies:
@@ -759,7 +759,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@nestor-home/satellite@0.5.0(@roamhq/wrtc@0.10.0)':
+  '@nestor-home/satellite@0.6.0(@roamhq/wrtc@0.10.0)':
     dependencies:
       '@fluent/bundle': 0.19.1
     optionalDependencies:

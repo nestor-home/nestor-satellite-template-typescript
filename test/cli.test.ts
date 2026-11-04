@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { AUDIO_CAPTURE, AUDIO_PLAYBACK, IDENTIFY, TEXT_DISPLAY } from "@nestor-home/satellite";
 import { describe, expect, it } from "vitest";
 import { build, defaultId, MODEL, NAME, parse, UsageError } from "../src/cli.js";
@@ -39,5 +40,12 @@ describe("my-satellite run", () => {
       expect(satellite.manifest.has(capability), capability).toBe(true);
     }
     expect(satellite.manifest.pairingMethods).toContain("device_code.speech");
+  });
+
+  it("names its own package as the software it runs, not the SDK", () => {
+    const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+    const args = parse(["run", "--core", "http://nestor.local:8471", "--room", "salon"], NO_ENV);
+    if (args === "help") throw new Error("expected arguments");
+    expect(build(args, quiet).manifest.toJSON().software).toEqual({ name: pkg.name, version: pkg.version });
   });
 });
