@@ -30,7 +30,7 @@
     "@roamhq/wrtc": "0.10.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.6",
+    "@biomejs/biome": "2.6.7",
     "@types/node": "22.20.5",
     "typescript": "5.9.3",
     "vitest": "5.1.0"
