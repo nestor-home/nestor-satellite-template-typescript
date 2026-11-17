@@ -1,3 +1,6 @@
 # Nestor's packages are used as soon as they are released.
 minimumReleaseAgeExclude:
   - "@nestor-home/*"
+# lefthook installs the hook through the "prepare" script, not its own postinstall.
+allowBuilds:
+  lefthook: false

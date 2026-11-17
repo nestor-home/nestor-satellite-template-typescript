@@ -17,6 +17,7 @@
     "dist"
   ],
   "scripts": {
+    "prepare": "lefthook install",
     "build": "rm -rf dist && tsc -p tsconfig.build.json && chmod +x dist/bin.js",
     "start": "node dist/bin.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.6.8",
     "@types/node": "22.20.5",
+    "lefthook": "2.2.2",
     "typescript": "5.9.3",
     "vitest": "5.1.0"
   }
