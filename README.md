@@ -112,8 +112,12 @@ pnpm conformance
 [conformance suite](https://nestorhome.dev/docs/satellites/conformance/) against it, through uvx
 ([uv](https://docs.astral.sh/uv/) must be installed) at the version in `.nestor-version`: it
 launches `my-satellite run --input none --output none` once per scenario and checks pairing,
-refused codes, identify, acks, text, audio and reconnection. CI runs both on every pull request.
-`pnpm format` fixes the formatting.
+refused codes, identify, acks, text, audio and reconnection. CI runs both on every pull request, on
+Node 22, 24 and 26. `pnpm format` fixes the formatting.
+
+`pnpm install` also installs a pre-push hook ([lefthook](https://github.com/evilmartians/lefthook), `lefthook.yml`): Biome
+on the pushed files and the typecheck, a few seconds. Test files run in a random order; a failure
+prints its seed, and `pnpm test --sequence.seed=<seed>` replays it.
 
 ## Release
 
